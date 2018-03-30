@@ -4,30 +4,28 @@ app = Flask(__name__)
 
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
 
-header = """
+form = """
 <!DOCTYPE html>
 
 <html>
     <head>
         <style>
-            form {
+            form {{
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }
-            textarea {
+            }}
+            textarea {{
                 margin: 10px 0;
                 width: 540px;
                 height: 120px;
-            }
+            }}
         </style>
     </head>
     <body>
-      """
-form = """
     <form action="/encrypt" method="post">
 
         <label for="Rotateby">Rotate by:</label>
@@ -37,10 +35,7 @@ form = """
         
         <input type="submit" value="Submit Query"/ >
     </form>
-"""
 
-
-footer = """
     </body>
 </html>
 """
@@ -50,14 +45,14 @@ def encrypt():
     rot_value = int(request.form['rot'])
     text_value = request.form['text']
     encrypted_text_value = rotate_string(text_value, rot_value)
-    return header + form.format(encrypted_text_value) + footer
+
+    return form.format(encrypted_text_value)
 
    
 """.format(encrypted_text) """
 
 @app.route("/")
 def index():
-    content = header + form.format("") + footer
-    return content
+    return form.format('')
 
 app.run()
